@@ -592,7 +592,6 @@ function getElementByIndexes(arr, indexes) {
   return indexes.reduce((acc, curr) => acc[curr], arr);
 }
 
-
 /**
  * Swaps the head and tail of the specified array:
  * the head (first half) of array move to the end, the tail (last half) move to the start.
@@ -611,8 +610,14 @@ function getElementByIndexes(arr, indexes) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8 ]   =>  [ 5, 6, 7, 8, 1, 2, 3, 4 ]
  *
  */
-function swapHeadAndTail(/* arr */) {
-  throw new Error('Not implemented');
+function swapHeadAndTail(arr) {
+  return arr.length % 2 === 0
+    ? [...arr.slice(arr.length / 2), ...arr.slice(0, arr.length / 2)]
+    : [
+      ...arr.slice(Math.floor(arr.length / 2) + 1, arr.length),
+      arr[Math.floor(arr.length / 2)],
+      ...arr.slice(0, Math.floor(arr.length / 2)),
+    ];
 }
 
 module.exports = {
