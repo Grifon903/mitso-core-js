@@ -259,13 +259,13 @@ function getMovingSum(arr) {
  * [ 'a', 'b', 'c' , null ]  => [ "b", null ]
  * [ "a" ] => []
  */
-function getMovingSum(arr) {
+function getSecondItems(arr) {
   const finalMass = [];
-  let counter = 0;
   // eslint-disable-next-line no-plusplus
   for (let i = 0; i < arr.length; i++) {
-    counter += arr[i];
-    finalMass.push(counter);
+    if (i % 2 !== 0) {
+      finalMass.push(arr[i]);
+    }
   }
   return finalMass;
 }
