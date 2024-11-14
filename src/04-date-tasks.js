@@ -71,8 +71,14 @@ function isLeapYear(date) {
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,10,0,0,250)     => "00:00:00.250"
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,15,20,10,453)   => "05:20:10.453"
  */
-function timeSpanToString(/* startDate, endDate */) {
-  throw new Error('Not implemented');
+function timeSpanToString(startDate, endDate) {
+  const timeDiff = endDate.getTime() - startDate.getTime();
+  const hours = Math.floor(timeDiff / (1000 * 60 * 60));
+  const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+  const milliseconds = timeDiff % 1000;
+  return (
+    `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}.${String(milliseconds).padStart(3, '0')}`);
 }
 
 /**
@@ -119,8 +125,30 @@ function angleBetweenClockHands(date) {
  *    getDay(365, false) => "December, 31"
  *    getDay(366, true) => "December, 31"
  */
-function getDay(/* day, isLeap */) {
-  throw new Error('Not implemented');
+function getDay(day, isLeap) {
+  const months = [
+    { name: 'January', days: 31 },
+    { name: 'February', days: isLeap ? 29 : 28 }, // Leap year check
+    { name: 'March', days: 31 },
+    { name: 'April', days: 30 },
+    { name: 'May', days: 31 },
+    { name: 'June', days: 30 },
+    { name: 'July', days: 31 },
+    { name: 'August', days: 31 },
+    { name: 'September', days: 30 },
+    { name: 'October', days: 31 },
+    { name: 'November', days: 30 },
+    { name: 'December', days: 31 },
+  ];
+  const findMonth = (index, remainingDay) => {
+    if (index === months.length - 1) {
+      return `${months[index].name}, ${remainingDay}`;
+    }
+    if (remainingDay <= months[index].days) {
+      return `${months[index].name}, ${remainingDay}`;
+    }
+    return findMonth(index + 1, remainingDay - months[index].days);
+  }; return findMonth(0, day);
 }
 
 module.exports = {
